@@ -840,6 +840,8 @@ async def sydfy_user(client, userid, token):
     await update_sydfy_status(user.id, date_var, temp_time)
 
 async def check_sydfication(client, userid):
+    if userid in ADMINS:
+        return True
     user = await client.get_users(int(userid))
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id, user.first_name)
@@ -903,3 +905,4 @@ async def syd_token(client, userid, link):
         vr_num = 1
     shortened_verify_url = await get_sydfy_shorted_link(url)
     return str(shortened_verify_url)
+
